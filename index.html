@@ -156,7 +156,8 @@
                 
                 <div class="mb-10">
                     <p class="mb-4 text-slate-600 leading-relaxed">
-                        הקוד עודכן עם הפונקציות החדשות, מותאם לקטגוריות: Amethyst, Rose Quartz ו-Turquoise.
+                        הקוד עודכן עם התאמות לקטגוריות: Amethyst, Rose Quartz ו-Turquoise. 
+                        <strong>שים לב:</strong> שלב הבדיקה הסטטיסטית אינו כולל השמעת מוזיקה או פתיחת אתרים כדי לשמור על רצף הבדיקה.
                     </p>
                     
                     <div class="bg-slate-800 rounded-2xl p-6 text-indigo-200 text-sm mb-6 shadow-2xl relative" dir="ltr">
@@ -168,7 +169,6 @@ import cv2
 import os
 import sys
 import time
-import webbrowser
 from google.colab import drive, files
 from google.colab.patches import cv2_imshow
 from IPython.display import display, Javascript, Audio, clear_output
@@ -253,7 +253,7 @@ def predict_single(image_path, silent=False):
         print(f"\n--- Model Result: {class_names[index]} ({conf*100:.1f}%) ---")
         cv2_imshow(cv2.resize(img, (300, 220)))
         
-        # פונקציות חיווי מורחבות
+        # פונקציות חיווי מורחבות (רק במצב זיהוי בודד)
         open_gemstone_info(class_names[index])
         play_gemstone_theme_music(class_names[index])
         
@@ -340,6 +340,7 @@ elif choice == '3':
                     break
             if not actual: actual = user_input
             
+        # הרצה שקטה עבור סטטיסטיקה בלבד - ללא אתר וללא שמע
         pred_label, conf = predict_single(filename, silent=True)
         
         print(f"\nResult: AI said \033[1m{pred_label}\033[0m (Real: \033[1m{actual}\033[0m)")
@@ -347,8 +348,6 @@ elif choice == '3':
         if pred_label.lower() == actual.lower():
             correct += 1
             print("🟢 MATCH!")
-            open_gemstone_info(pred_label)
-            play_gemstone_theme_music(pred_label)
         else:
             print("🔴 MISMATCH")
         
@@ -375,7 +374,7 @@ else:
                             <h4 class="font-bold text-red-900 underline">בעיות טכניות</h4>
                             <ul class="text-sm space-y-3 text-red-800">
                                 <li><strong>שמות הקטגוריות:</strong> ודאו שב-Teachable Machine הקטגוריות נקראות בדיוק Amethyst, Rose Quartz ו-Turquoise (עם רווחים ואותיות גדולות באותו אופן).</li>
-                                <li><strong>מוזיקה:</strong> בדקו שהרמקולים דלוקים ב-Colab.</li>
+                                <li><strong>מוזיקה:</strong> בדקו שהרמקולים דלוקים ב-Colab. המוזיקה פועלת רק במצבי "זיהוי חי" או "העלאת תמונה".</li>
                             </ul>
                         </div>
                         <div class="space-y-4">
