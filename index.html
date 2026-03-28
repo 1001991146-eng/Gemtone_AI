@@ -104,7 +104,7 @@
                 <div class="space-y-6 text-slate-700">
                     <div class="flex gap-4 items-start">
                         <div class="bg-teal-600 text-white w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">1</div>
-                        <p>צרו <strong>Classes</strong> באנגלית עבור כל סוג אבן (למשל: Amethyst, Quartz).</p>
+                        <p>צרו <strong>Classes</strong> באנגלית עבור כל סוג אבן (Amethyst, Rose Quartz, Turquoise).</p>
                     </div>
                     <div class="flex gap-4 items-start">
                         <div class="bg-teal-600 text-white w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">2</div>
@@ -152,11 +152,11 @@
         <!-- STEP 3: CODE -->
         <div id="step-3" class="step-container">
             <div class="glass p-8 rounded-3xl shadow-xl border-t-8 border-indigo-600">
-                <h2 class="text-3xl font-bold text-indigo-900 mb-6">💻 שלב 4: הקוד המלא - כולל מידע ומוזיקה תואמת</h2>
+                <h2 class="text-3xl font-bold text-indigo-900 mb-6">💻 שלב 4: הקוד המלא - מותאם לאבנים נבחרות</h2>
                 
                 <div class="mb-10">
                     <p class="mb-4 text-slate-600 leading-relaxed">
-                        הקוד עודכן עם פונקציה להשמעת שירים המותאמים לאופי של כל אבן חן שזוהתה.
+                        הקוד עודכן עם הפונקציות החדשות, מותאם לקטגוריות: Amethyst, Rose Quartz ו-Turquoise.
                     </p>
                     
                     <div class="bg-slate-800 rounded-2xl p-6 text-indigo-200 text-sm mb-6 shadow-2xl relative" dir="ltr">
@@ -200,10 +200,9 @@ else:
 def play_gemstone_theme_music(prediction):
     """השמעת שיר או נעימה המותאמת לאופי האבן"""
     music_library = {
-        "Diamond": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3", # מוזיקה יוקרתית
-        "Ruby": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",    # מוזיקה דרמטית/תשוקה
-        "Emerald": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3", # מוזיקה רגועה/טבע
-        "Quartz": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3"   # מוזיקה נקייה
+        "Amethyst": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",    # נעימה רוחנית/רגועה
+        "Rose Quartz": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", # נעימה רומנטית/עדינה
+        "Turquoise": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"   # נעימה אוריינטלית/חזקה
     }
     
     music_url = music_library.get(prediction, "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3")
@@ -214,17 +213,17 @@ def open_gemstone_info(prediction):
     """פונקציה לפתיחת מידע נוסף על האבן שזוהתה"""
     print(f"\n✨ מידע נוסף על {prediction}:")
     
-    if prediction == "Diamond":
-        print("💎 זוהה יהלום! אבן המזל של חודש אפריל. סמל לנצחיות וגבורה.")
-        display(Javascript(f'window.open("https://www.jewelry-site.com/diamonds", "_blank");'))
+    if prediction == "Amethyst":
+        print("💜 זוהה אמטיסט (Amethyst)! אבן המזל של חודש פברואר. סמל לשלווה וחיבור רוחני.")
+        display(Javascript(f'window.open("https://www.stone-info.com/amethyst", "_blank");'))
         
-    elif prediction == "Ruby":
-        print("❤️ זוהה אודם (Ruby)! אבן המזל של יולי. סמל לאהבה ותשוקה.")
-        display(Javascript(f'window.open("https://www.jewelry-site.com/rubies", "_blank");'))
+    elif prediction == "Rose Quartz":
+        print("🩷 זוהה רוז קוורץ! אבן האהבה ללא תנאי. מקושרת לריפוי רגשי ופתיחת הלב.")
+        display(Javascript(f'window.open("https://www.stone-info.com/rose-quartz", "_blank");'))
     
-    elif prediction == "Emerald":
-        print("💚 זוהה ברקת (Emerald)! אבן המזל של מאי. סמל לצמיחה וסבלנות.")
-        display(Javascript(f'window.open("https://www.stone-info.com/emerald", "_blank");'))
+    elif prediction == "Turquoise":
+        print("🩵 זוהה טורקיז! אבן המזל של דצמבר. סמל להגנה, מזל טוב וחוכמה עתיקה.")
+        display(Javascript(f'window.open("https://www.stone-info.com/turquoise", "_blank");'))
         
     else:
         print(f"🔍 מחפש מידע על המזלות והמשמעות של {prediction}...")
@@ -375,14 +374,14 @@ else:
                         <div class="space-y-4">
                             <h4 class="font-bold text-red-900 underline">בעיות טכניות</h4>
                             <ul class="text-sm space-y-3 text-red-800">
-                                <li><strong>מוזיקה:</strong> השתמשנו בספריית <code>Audio</code> של IPython להשמעה ישירה. ודאו שהרמקולים דלוקים!</li>
-                                <li><strong>פתיחת חלונות:</strong> אם הדפדפן חוסם חלונות קופצים, הלינק למידע על האבן לא ייפתח אוטומטית.</li>
+                                <li><strong>שמות הקטגוריות:</strong> ודאו שב-Teachable Machine הקטגוריות נקראות בדיוק Amethyst, Rose Quartz ו-Turquoise (עם רווחים ואותיות גדולות באותו אופן).</li>
+                                <li><strong>מוזיקה:</strong> בדקו שהרמקולים דלוקים ב-Colab.</li>
                             </ul>
                         </div>
                         <div class="space-y-4">
                             <h4 class="font-bold text-red-900 underline">שיפור הדיוק</h4>
                             <ul class="text-sm space-y-3 text-red-800">
-                                <li>הוסיפו תמונות אימון נוספות לכל קטגוריה ב-Teachable Machine.</li>
+                                <li>הוסיפו תמונות אימון נוספות לאמטיסט, רוז קוורץ וטורקיז.</li>
                             </ul>
                         </div>
                     </div>
