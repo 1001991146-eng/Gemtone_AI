@@ -104,7 +104,7 @@
                 <div class="space-y-6 text-slate-700">
                     <div class="flex gap-4 items-start">
                         <div class="bg-teal-600 text-white w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">1</div>
-                        <p>צרו <strong>Classes</strong> באנגלית עבור כל סוג אבן (Amethyst, Rose Quartz, Turquoise).</p>
+                        <p>צרו <strong>Classes</strong> באנגלית עבור כל סוג אבן (Amethyst, Rose-Quartz, Turquoise).</p>
                     </div>
                     <div class="flex gap-4 items-start">
                         <div class="bg-teal-600 text-white w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">2</div>
@@ -156,7 +156,7 @@
                 
                 <div class="mb-10">
                     <p class="mb-4 text-slate-600 leading-relaxed">
-                        הקוד עודכן עם התאמות לקטגוריות: Amethyst, Rose Quartz ו-Turquoise. 
+                        הקוד עודכן עם התאמות לקטגוריות: Amethyst, Rose-Quartz ו-Turquoise. 
                         <strong>שים לב:</strong> שלב הבדיקה הסטטיסטית אינו כולל השמעת מוזיקה או פתיחת אתרים כדי לשמור על רצף הבדיקה.
                     </p>
                     
@@ -201,7 +201,7 @@ def play_gemstone_theme_music(prediction):
     """השמעת שיר או נעימה המותאמת לאופי האבן"""
     music_library = {
         "Amethyst": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",    # נעימה רוחנית/רגועה
-        "Rose Quartz": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", # נעימה רומנטית/עדינה
+        "Rose-Quartz": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3", # נעימה רומנטית/עדינה
         "Turquoise": "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3"   # נעימה אוריינטלית/חזקה
     }
     
@@ -215,15 +215,15 @@ def open_gemstone_info(prediction):
     
     if prediction == "Amethyst":
         print("💜 זוהה אמטיסט (Amethyst)! אבן המזל של חודש פברואר. סמל לשלווה וחיבור רוחני.")
-        display(Javascript(f'window.open("https://www.stone-info.com/amethyst", "_blank");'))
+        display(Javascript(f'window.open("https://www.gia.edu/amethyst", "_blank");'))
         
-    elif prediction == "Rose Quartz":
-        print("🩷 זוהה רוז קוורץ! אבן האהבה ללא תנאי. מקושרת לריפוי רגשי ופתיחת הלב.")
-        display(Javascript(f'window.open("https://www.stone-info.com/rose-quartz", "_blank");'))
+    elif prediction == "Rose-Quartz":
+        print("🩷 זוהה רוז קוורץ (Rose-Quartz)! אבן האהבה ללא תנאי. מקושרת לריפוי רגשי ופתיחת הלב.")
+        display(Javascript(f'window.open("https://www.gia.edu/rose-quartz", "_blank");'))
     
     elif prediction == "Turquoise":
-        print("🩵 זוהה טורקיז! אבן המזל של דצמבר. סמל להגנה, מזל טוב וחוכמה עתיקה.")
-        display(Javascript(f'window.open("https://www.stone-info.com/turquoise", "_blank");'))
+        print("🩵 זוהה טורקיז (Turquoise)! אבן המזל של דצמבר. סמל להגנה, מזל טוב וחוכמה עתיקה.")
+        display(Javascript(f'window.open("https://www.gia.edu/turquoise", "_blank");'))
         
     else:
         print(f"🔍 מחפש מידע על המזלות והמשמעות של {prediction}...")
@@ -373,14 +373,14 @@ else:
                         <div class="space-y-4">
                             <h4 class="font-bold text-red-900 underline">בעיות טכניות</h4>
                             <ul class="text-sm space-y-3 text-red-800">
-                                <li><strong>שמות הקטגוריות:</strong> ודאו שב-Teachable Machine הקטגוריות נקראות בדיוק Amethyst, Rose Quartz ו-Turquoise (עם רווחים ואותיות גדולות באותו אופן).</li>
+                                <li><strong>שמות הקטגוריות:</strong> ודאו שב-Teachable Machine הקטגוריות נקראות בדיוק Amethyst, Rose-Quartz ו-Turquoise (עם מקף במקום רווח).</li>
                                 <li><strong>מוזיקה:</strong> בדקו שהרמקולים דלוקים ב-Colab. המוזיקה פועלת רק במצבי "זיהוי חי" או "העלאת תמונה".</li>
                             </ul>
                         </div>
                         <div class="space-y-4">
                             <h4 class="font-bold text-red-900 underline">שיפור הדיוק</h4>
                             <ul class="text-sm space-y-3 text-red-800">
-                                <li>הוסיפו תמונות אימון נוספות לאמטיסט, רוז קוורץ וטורקיז.</li>
+                                <li>הוסיפו תמונות אימון נוספות לאמטיסט, רוז-קוורץ וטורקיז.</li>
                             </ul>
                         </div>
                     </div>
