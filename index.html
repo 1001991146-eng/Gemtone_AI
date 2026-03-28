@@ -48,7 +48,6 @@
                 </h2>
                 
                 <div class="grid md:grid-cols-3 gap-4 mb-8">
-                    <!-- Option A: Photography -->
                     <div class="bg-white p-5 rounded-2xl border border-purple-100 shadow-sm">
                         <h3 class="font-bold text-purple-900 mb-3 text-lg italic underline">אפשרות א': צילום עצמי</h3>
                         <ul class="space-y-2 text-sm text-slate-700">
@@ -58,7 +57,6 @@
                         </ul>
                     </div>
                     
-                    <!-- Option B: Web Search -->
                     <div class="bg-blue-50 p-5 rounded-2xl border border-blue-200 shadow-sm">
                         <h3 class="font-bold text-blue-900 mb-3 text-lg italic underline">אפשרות ב': חיפוש ברשת</h3>
                         <ul class="space-y-2 text-sm text-slate-700">
@@ -68,7 +66,6 @@
                         </ul>
                     </div>
 
-                    <!-- Option C: Jewelry Search -->
                     <div class="bg-rose-50 p-5 rounded-2xl border border-rose-200 shadow-sm">
                         <h3 class="font-bold text-rose-900 mb-3 text-lg italic underline">אפשרות ג': תכשיטים (מומלץ!)</h3>
                         <p class="text-xs text-rose-800 mb-2 font-bold">זיהוי אבנים בתוך תכשיטים מוגמרים:</p>
@@ -157,10 +154,9 @@
             <div class="glass p-8 rounded-3xl shadow-xl border-t-8 border-indigo-600">
                 <h2 class="text-3xl font-bold text-indigo-900 mb-6">💻 שלב 4: הקוד המלא ומצב בדיקה</h2>
                 
-                <!-- Section: The Code -->
                 <div class="mb-10">
                     <p class="mb-4 text-slate-600 leading-relaxed">
-                        העתיקו את הקוד המלא ל-Google Colab. הוספנו <strong>אופציה 3</strong> חדשה המאפשרת להעלות את תמונות הבדיקה (ה-20%) ולחשב אוטומטית את אחוזי הדיוק של המערכת.
+                        העתיקו את הקוד המלא ל-Google Colab. המערכת כוללת כעת <strong>מצב בדיקה אינטראקטיבי</strong> עם תיקון חסון לתצוגת תיבת הקלט.
                     </p>
                     
                     <div class="bg-slate-800 rounded-2xl p-6 text-indigo-200 text-sm mb-6 shadow-2xl relative" dir="ltr">
@@ -170,9 +166,11 @@ import tensorflow as tf
 import numpy as np
 import cv2
 import os
+import sys
+import time
 from google.colab import drive, files
 from google.colab.patches import cv2_imshow
-from IPython.display import display, Javascript, Audio
+from IPython.display import display, Javascript, Audio, clear_output
 from google.colab.output import eval_js
 from base64 import b64decode
 
@@ -184,88 +182,172 @@ PATH = '/content/drive/MyDrive/Gemstone_Project/'
 MODEL_PATH = os.path.join(PATH, 'saved_model')
 LABELS_PATH = os.path.join(PATH, 'labels.txt')
 
-# 3. Load Model and Labels
+# 3. Load Model using TFSMLayer
 if os.path.exists(MODEL_PATH):
-    model = tf.keras.models.load_model(MODEL_PATH)
+    sm_layer = tf.keras.layers.TFSMLayer(MODEL_PATH, call_endpoint='serving_default')
+    model = tf.keras.Sequential([sm_layer])
+    
     with open(LABELS_PATH, "r", encoding="utf-8") as f:
-        class_names = [line.strip().split(' ', 1)[-1] for line in f.readlines()]
-    print("✅ System Ready!")
+        class_names = []
+        for line in f.readlines():
+            parts = line.strip().split(' ')
+            class_names.append(parts[1] if len(parts) > 1 else parts[0])
+    print(f"✅ System Ready! Loaded categories: {class_names}")
 else:
-    print("❌ Error: Path not found!")
+    print("❌ Error: Path not found! Ensure folder 'Gemstone_Project/saved_model' exists.")
 
 def predict_single(image_path, silent=False):
     img = cv2.imread(image_path)
     if img is None: return None, 0
+    
     img_resized = cv2.resize(img, (224, 224))
     img_array = np.asarray(img_resized, dtype=np.float32).reshape(1, 224, 224, 3)
     img_array = (img_array / 127.5) - 1
-    prediction = model.predict(img_array, verbose=0)
-    index = np.argmax(prediction)
+    
+    predictions_dict = model.predict(img_array, verbose=0)
+    
+    if isinstance(predictions_dict, dict):
+        output_key = list(predictions_dict.keys())[0]
+        prediction_probs = predictions_dict[output_key]
+    else:
+        prediction_probs = predictions_dict
+
+    index = np.argmax(prediction_probs)
+    conf = float(prediction_probs[0][index])
+    
     if not silent:
-        print(f"Prediction: {class_names[index]} ({prediction[0][index]*100:.1f}%)")
-        cv2_imshow(cv2.resize(img, (200, 150)))
-    return class_names[index], prediction[0][index]
+        print(f"\n--- Model Result: {class_names[index]} ({conf*100:.1f}%) ---")
+        cv2_imshow(cv2.resize(img, (300, 220)))
+    return class_names[index], conf
+
+def take_photo(filename='photo.jpg'):
+  js = Javascript('''
+    async function takePhoto() {
+      const div = document.createElement('div');
+      const video = document.createElement('video');
+      video.style.display = 'block';
+      const stream = await navigator.mediaDevices.getUserMedia({video: true});
+      document.body.appendChild(div);
+      div.appendChild(video);
+      video.srcObject = stream;
+      await video.play();
+      const btn = document.createElement('button');
+      btn.textContent = 'Capture Gemstone';
+      btn.style.cssText = 'padding:10px; background:purple; color:white; margin:10px; border-radius:5px;';
+      div.appendChild(btn);
+      await new Promise((resolve) => btn.onclick = resolve);
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+      canvas.getContext('2d').drawImage(video, 0, 0);
+      stream.getVideoTracks()[0].stop(); div.remove();
+      return canvas.toDataURL('image/jpeg');
+    }
+  ''')
+  display(js)
+  data = eval_js('takePhoto()')
+  binary = b64decode(data.split(',')[1])
+  with open(filename, 'wb') as f: f.write(binary)
+  return filename
 
 # Main Menu
-print("\n--- Menu ---")
-print("1 - Camera | 2 - Single Upload | 3 - Accuracy Test (Upload Multiple)")
-choice = input("Select: ")
+print("\n" + "="*30)
+print(" GEMSTONE CLASSIFICATION MENU")
+print("="*30)
+print("1 - Live Camera")
+print("2 - Single Upload")
+print("3 - Interactive Accuracy Test (20% set)")
+sys.stdout.flush()
+choice = input("Select Option: ")
 
-if choice == '3':
-    print("Upload your 20% test images...")
+if choice == '1':
+    photo = take_photo()
+    predict_single(photo)
+elif choice == '2':
+    uploaded = files.upload()
+    if uploaded:
+        predict_single(list(uploaded.keys())[0])
+elif choice == '3':
+    print("\nPlease upload your test images (20% set)...")
     uploaded = files.upload()
     correct = 0
     total = len(uploaded)
     
-    print("\n--- Starting Statistical Analysis ---")
-    for filename in uploaded.keys():
-        print(f"\nImage: {filename}")
-        print("Available classes:", class_names)
-        actual = input(f"What is the CORRECT class for this image? ").strip()
-        pred_label, conf = predict_single(filename, silent=False)
+    for i, filename in enumerate(uploaded.keys()):
+        clear_output(wait=True)
+        print(f"\033[1;34mIMAGE {i+1} / {total}: {filename}\033[0m") # Bold Blue
+        
+        # 1. Display the image
+        img = cv2.imread(filename)
+        cv2_imshow(cv2.resize(img, (300, 220)))
+        
+        # 2. Wait a split second for Colab to render the image
+        time.sleep(0.5)
+        
+        # 3. Print list clearly
+        print("\n\033[1;33m--- CATEGORIES ---\033[0m")
+        for idx, name in enumerate(class_names):
+            print(f"[{idx}] {name}")
+        
+        # 4. Mandatory flush and extra spacing to force input() to the bottom
+        print("\n" * 2) 
+        sys.stdout.flush()
+        
+        # 5. Get input
+        prompt = f"\033[1;35m>>> ENTER CORRECT CATEGORY (0-{len(class_names)-1}) or Name:\033[0m "
+        user_input = input(prompt).strip()
+        
+        # Resolve class
+        actual = ""
+        if user_input.isdigit() and int(user_input) < len(class_names):
+            actual = class_names[int(user_input)]
+        else:
+            for name in class_names:
+                if user_input.lower() == name.lower():
+                    actual = name
+                    break
+            if not actual: actual = user_input
+            
+        # Get model prediction
+        pred_label, conf = predict_single(filename, silent=True)
+        
+        print(f"\nResult: AI said \033[1m{pred_label}\033[0m (Real: \033[1m{actual}\033[0m)")
         
         if pred_label.lower() == actual.lower():
             correct += 1
-            print("✔️ Correct!")
+            print("🟢 MATCH!")
         else:
-            print(f"❌ Wrong! (Expected: {actual})")
+            print("🔴 MISMATCH")
+        
+        sys.stdout.flush()
+        input("\nPress Enter for next image...")
             
-    accuracy = (correct / total) * 100
-    print(f"\n============================")
-    print(f"FINAL ACCURACY: {accuracy:.2f}%")
-    print(f"============================")
-    
-    if accuracy < 85:
-        print("\n⚠️ Accuracy is too low! Suggestions:")
-        print("1. Add more diverse images to your training set.")
-        print("2. Ensure backgrounds are neutral.")
-        print("3. Check for 'Label Noise' (wrongly labeled images).")
+    clear_output()
+    acc = (correct / total) * 100
+    print(f"\n" + "🏁"*15)
+    print(f" TEST COMPLETE | Accuracy: {acc:.2f}%")
+    print("🏁"*15)
+else:
+    print("Invalid Selection.")
 </pre>
                     </div>
                 </div>
 
-                <!-- Section: Troubleshooting -->
                 <div class="bg-red-50 border-2 border-red-200 rounded-3xl p-8 mb-8">
                     <h3 class="text-2xl font-black text-red-800 mb-6 flex items-center gap-2">
                         <span>🛠️</span> מה עושים אם זה לא עובד?
                     </h3>
-                    
                     <div class="grid md:grid-cols-2 gap-6">
                         <div class="space-y-4">
                             <h4 class="font-bold text-red-900 underline">בעיות טכניות</h4>
                             <ul class="text-sm space-y-3 text-red-800">
-                                <li><strong>שגיאת נתיב (Path Error):</strong> ודאו ששם התיקייה בדרייב זהה בדיוק לשם בקוד (Gemstone_Project).</li>
-                                <li><strong>הקוד לא מזהה את המודל:</strong> ודאו שהעליתם את כל התיקייה <code>saved_model</code> ולא רק את הקבצים שבתוכה.</li>
-                                <li><strong>בעיית הרשאות:</strong> ודאו שאישרתם ל-Colab להתחבר לדרייב (יופיע חלון קופץ).</li>
+                                <li><strong>שגיאת נתיב:</strong> ודאו ששם התיקייה בדרייב זהה בדיוק לשם בקוד.</li>
+                                <li><strong>תיבת הקלט:</strong> אם תיבת הקלט נעלמת ב-Colab, נסו להשתמש בקיצור הדרך <code>Shift+Enter</code> או לגלול מעט למטה.</li>
                             </ul>
                         </div>
                         <div class="space-y-4">
-                            <h4 class="font-bold text-red-900 underline">שיפור הדיוק (Dataset)</h4>
+                            <h4 class="font-bold text-red-900 underline">שיפור הדיוק</h4>
                             <ul class="text-sm space-y-3 text-red-800">
-                                <li><strong>יותר תמונות:</strong> מודל טוב צריך לפחות 200-300 תמונות לכל קטגוריה.</li>
-                                <li><strong>איזון (Balance):</strong> ודאו שיש כמות דומה של תמונות לכל אבן.</li>
-                                <li><strong>הפרדת רקע:</strong> אם צילמתם תכשיטים על רקע עמוס, המודל עלול להתבלבל. נסו לצלם על רקע לבן/שחור אחיד.</li>
-                                <li><strong>תאורה:</strong> הוסיפו תמונות בתנאי תאורה קשים כדי להפוך את המודל ל"חסין" יותר.</li>
+                                <li>הוסיפו תמונות אימון נוספות לכל קטגוריה ב-Teachable Machine.</li>
                             </ul>
                         </div>
                     </div>
