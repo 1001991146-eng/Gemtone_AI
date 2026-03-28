@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>מדריך פרויקט זיהוי אבני חן</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Heebo', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .step-container { display: none; }
+        .step-container.active { display: block; animation: fadeIn 0.5s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .nav-btn.active { color: #7e22ce; border-bottom: 2px solid #7e22ce; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #1e293b; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 10px; }
+        pre { direction: ltr; text-align: left; }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50">
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm py-6 mb-8 border-b border-purple-100 sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <span class="text-4xl">💎</span>
+                <h1 class="text-2xl font-black text-purple-900">זיהוי אבני חן ותכשיטים</h1>
+            </div>
+            <nav class="flex gap-4">
+                <button onclick="goToStep(0)" id="nav-0" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1 active">נתונים</button>
+                <button onclick="goToStep(1)" id="nav-1" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1">אימון</button>
+                <button onclick="goToStep(2)" id="nav-2" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1">דרייב</button>
+                <button onclick="goToStep(3)" id="nav-3" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1">קוד</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 pb-20">
+        
+        <!-- STEP 0: DATASET -->
+        <div id="step-0" class="step-container active">
+            <div class="glass p-8 rounded-3xl shadow-xl">
+                <h2 class="text-3xl font-bold text-purple-800 mb-6 flex items-center gap-3">
+                    <span class="bg-purple-100 p-2 rounded-lg">📂</span>
+                    שלב 1: הכנת הנתונים (Dataset)
+                </h2>
+                
+                <div class="grid md:grid-cols-3 gap-4 mb-8">
+                    <!-- Option A: Photography -->
+                    <div class="bg-white p-5 rounded-2xl border border-purple-100 shadow-sm">
+                        <h3 class="font-bold text-purple-900 mb-3 text-lg italic underline">אפשרות א': צילום עצמי</h3>
+                        <ul class="space-y-2 text-sm text-slate-700">
+                            <li>📸 צלמו כל אבן לפחות 100 פעמים.</li>
+                            <li>💡 השתמשו בתאורה משתנה.</li>
+                            <li>✋ אל תצלמו רק על היד.</li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Option B: Web Search -->
+                    <div class="bg-blue-50 p-5 rounded-2xl border border-blue-200 shadow-sm">
+                        <h3 class="font-bold text-blue-900 mb-3 text-lg italic underline">אפשרות ב': חיפוש ברשת</h3>
+                        <ul class="space-y-2 text-sm text-slate-700">
+                            <li>🔍 חפשו "[Gem Name] stone" בגוגל.</li>
+                            <li>🌐 היעזרו במאגרים כמו Kaggle.</li>
+                            <li>⚠️ ודאו תמונות נקיות ללא סימני מים.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Option C: Jewelry Search -->
+                    <div class="bg-rose-50 p-5 rounded-2xl border border-rose-200 shadow-sm">
+                        <h3 class="font-bold text-rose-900 mb-3 text-lg italic underline">אפשרות ג': תכשיטים (מומלץ!)</h3>
+                        <p class="text-xs text-rose-800 mb-2 font-bold">זיהוי אבנים בתוך תכשיטים מוגמרים:</p>
+                        <ul class="space-y-2 text-sm text-slate-700">
+                            <li>💍 <strong>מגוון:</strong> חפשו טבעות, עגילים ושרשראות.</li>
+                            <li>🔎 <strong>Close-up:</strong> התמקדו באבן שבתוך התכשיט.</li>
+                            <li>✨ <strong>רקעים:</strong> חפשו את האבן בזהב ובכסף.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-purple-900 text-white p-6 rounded-2xl shadow-lg mb-8">
+                    <h3 class="font-bold mb-4 text-xl">חוק ה-80/20</h3>
+                    <p class="text-sm opacity-90 leading-relaxed mb-4">
+                        בין אם מדובר באבנים גולמיות או בתכשיטים יוקרתיים, הפרידו את הנתונים:
+                    </p>
+                    <ul class="text-sm space-y-2">
+                        <li>🔹 <strong>80% אימון:</strong> התמונות שנעלה ל-Teachable Machine.</li>
+                        <li>🔹 <strong>20% בדיקה:</strong> תמונות שהמודל לא יראה לעולם, אותן נשמור לבדיקה הסופית בקוד.</li>
+                    </ul>
+                </div>
+
+                <div class="flex justify-end">
+                    <button onclick="goToStep(1)" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-4 px-10 rounded-2xl transition-all shadow-lg">המשך לאימון ←</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 1: TRAINING -->
+        <div id="step-1" class="step-container">
+            <div class="glass p-8 rounded-3xl shadow-xl border-t-8 border-teal-500">
+                <h2 class="text-3xl font-bold text-teal-800 mb-6 flex items-center gap-3">
+                    <span class="bg-teal-100 p-2 rounded-lg">🧠</span>
+                    שלב 2: אימון ב-Teachable Machine
+                </h2>
+                <div class="space-y-6 text-slate-700">
+                    <div class="flex gap-4 items-start">
+                        <div class="bg-teal-600 text-white w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">1</div>
+                        <p>צרו <strong>Classes</strong> באנגלית עבור כל סוג אבן (למשל: Amethyst, Quartz).</p>
+                    </div>
+                    <div class="flex gap-4 items-start">
+                        <div class="bg-teal-600 text-white w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">2</div>
+                        <p>העלו את תמונות האימון (ה-80%) ולחצו על <strong>Train Model</strong>.</p>
+                    </div>
+                    <div class="flex gap-4 items-start">
+                        <div class="bg-teal-600 text-white w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0">3</div>
+                        <div class="w-full">
+                            <p class="font-bold mb-2">ייצוא המודל (SavedModel):</p>
+                            <ul class="text-sm list-disc list-inside bg-teal-50 p-4 rounded-xl border border-teal-100">
+                                <li>בלשונית <strong>TensorFlow</strong> בחרו <strong>SavedModel</strong>.</li>
+                                <li>הורידו את ה-ZIP וחלצו אותו במחשב.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-10 flex justify-between">
+                    <button onclick="goToStep(0)" class="text-slate-500 font-bold">← חזור</button>
+                    <button onclick="goToStep(2)" class="bg-teal-600 hover:bg-teal-700 text-white font-bold py-4 px-10 rounded-2xl shadow-lg">המשך לדרייב ←</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2: DRIVE -->
+        <div id="step-2" class="step-container">
+            <div class="glass p-8 rounded-3xl shadow-xl border-t-8 border-blue-500">
+                <h2 class="text-3xl font-bold text-blue-800 mb-6 flex items-center gap-3">
+                    <span class="bg-blue-100 p-2 rounded-lg">☁️</span>
+                    שלב 3: סידור ב-Google Drive
+                </h2>
+                <p class="mb-4 text-slate-600">העלו את התיקייה שחילצתם לדרייב:</p>
+                <div class="bg-slate-900 text-blue-300 p-6 rounded-2xl font-mono text-sm shadow-inner mb-6" dir="ltr">
+                    My Drive /<br>
+                    └── <span class="text-white font-bold">Gemstone_Project</span> /<br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;├── <span class="text-yellow-400">saved_model /</span><br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;└── <span class="text-yellow-400">labels.txt</span>
+                </div>
+                <div class="mt-10 flex justify-between">
+                    <button onclick="goToStep(1)" class="text-slate-500 font-bold">← חזור</button>
+                    <button onclick="goToStep(3)" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-10 rounded-2xl shadow-lg">לשלב הקוד ←</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 3: CODE -->
+        <div id="step-3" class="step-container">
+            <div class="glass p-8 rounded-3xl shadow-xl border-t-8 border-indigo-600">
+                <h2 class="text-3xl font-bold text-indigo-900 mb-6">💻 שלב 4: הקוד המלא ומצב בדיקה</h2>
+                
+                <!-- Section: The Code -->
+                <div class="mb-10">
+                    <p class="mb-4 text-slate-600 leading-relaxed">
+                        העתיקו את הקוד המלא ל-Google Colab. הוספנו <strong>אופציה 3</strong> חדשה המאפשרת להעלות את תמונות הבדיקה (ה-20%) ולחשב אוטומטית את אחוזי הדיוק של המערכת.
+                    </p>
+                    
+                    <div class="bg-slate-800 rounded-2xl p-6 text-indigo-200 text-sm mb-6 shadow-2xl relative" dir="ltr">
+                        <button onclick="copyCode()" class="absolute top-4 right-4 bg-slate-700 hover:bg-slate-600 text-white px-3 py-1 rounded-md text-xs transition-colors">Copy Code</button>
+                        <pre id="fullPythonCode" class="overflow-x-auto custom-scrollbar" style="max-height: 400px;">
+import tensorflow as tf
+import numpy as np
+import cv2
+import os
+from google.colab import drive, files
+from google.colab.patches import cv2_imshow
+from IPython.display import display, Javascript, Audio
+from google.colab.output import eval_js
+from base64 import b64decode
+
+# 1. Mount Google Drive
+drive.mount('/content/drive')
+
+# 2. Paths Configuration
+PATH = '/content/drive/MyDrive/Gemstone_Project/'
+MODEL_PATH = os.path.join(PATH, 'saved_model')
+LABELS_PATH = os.path.join(PATH, 'labels.txt')
+
+# 3. Load Model and Labels
+if os.path.exists(MODEL_PATH):
+    model = tf.keras.models.load_model(MODEL_PATH)
+    with open(LABELS_PATH, "r", encoding="utf-8") as f:
+        class_names = [line.strip().split(' ', 1)[-1] for line in f.readlines()]
+    print("✅ System Ready!")
+else:
+    print("❌ Error: Path not found!")
+
+def predict_single(image_path, silent=False):
+    img = cv2.imread(image_path)
+    if img is None: return None, 0
+    img_resized = cv2.resize(img, (224, 224))
+    img_array = np.asarray(img_resized, dtype=np.float32).reshape(1, 224, 224, 3)
+    img_array = (img_array / 127.5) - 1
+    prediction = model.predict(img_array, verbose=0)
+    index = np.argmax(prediction)
+    if not silent:
+        print(f"Prediction: {class_names[index]} ({prediction[0][index]*100:.1f}%)")
+        cv2_imshow(cv2.resize(img, (200, 150)))
+    return class_names[index], prediction[0][index]
+
+# Main Menu
+print("\n--- Menu ---")
+print("1 - Camera | 2 - Single Upload | 3 - Accuracy Test (Upload Multiple)")
+choice = input("Select: ")
+
+if choice == '3':
+    print("Upload your 20% test images...")
+    uploaded = files.upload()
+    correct = 0
+    total = len(uploaded)
+    
+    print("\n--- Starting Statistical Analysis ---")
+    for filename in uploaded.keys():
+        print(f"\nImage: {filename}")
+        print("Available classes:", class_names)
+        actual = input(f"What is the CORRECT class for this image? ").strip()
+        pred_label, conf = predict_single(filename, silent=False)
+        
+        if pred_label.lower() == actual.lower():
+            correct += 1
+            print("✔️ Correct!")
+        else:
+            print(f"❌ Wrong! (Expected: {actual})")
+            
+    accuracy = (correct / total) * 100
+    print(f"\n============================")
+    print(f"FINAL ACCURACY: {accuracy:.2f}%")
+    print(f"============================")
+    
+    if accuracy < 85:
+        print("\n⚠️ Accuracy is too low! Suggestions:")
+        print("1. Add more diverse images to your training set.")
+        print("2. Ensure backgrounds are neutral.")
+        print("3. Check for 'Label Noise' (wrongly labeled images).")
+</pre>
+                    </div>
+                </div>
+
+                <!-- Section: Troubleshooting -->
+                <div class="bg-red-50 border-2 border-red-200 rounded-3xl p-8 mb-8">
+                    <h3 class="text-2xl font-black text-red-800 mb-6 flex items-center gap-2">
+                        <span>🛠️</span> מה עושים אם זה לא עובד?
+                    </h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-red-900 underline">בעיות טכניות</h4>
+                            <ul class="text-sm space-y-3 text-red-800">
+                                <li><strong>שגיאת נתיב (Path Error):</strong> ודאו ששם התיקייה בדרייב זהה בדיוק לשם בקוד (Gemstone_Project).</li>
+                                <li><strong>הקוד לא מזהה את המודל:</strong> ודאו שהעליתם את כל התיקייה <code>saved_model</code> ולא רק את הקבצים שבתוכה.</li>
+                                <li><strong>בעיית הרשאות:</strong> ודאו שאישרתם ל-Colab להתחבר לדרייב (יופיע חלון קופץ).</li>
+                            </ul>
+                        </div>
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-red-900 underline">שיפור הדיוק (Dataset)</h4>
+                            <ul class="text-sm space-y-3 text-red-800">
+                                <li><strong>יותר תמונות:</strong> מודל טוב צריך לפחות 200-300 תמונות לכל קטגוריה.</li>
+                                <li><strong>איזון (Balance):</strong> ודאו שיש כמות דומה של תמונות לכל אבן.</li>
+                                <li><strong>הפרדת רקע:</strong> אם צילמתם תכשיטים על רקע עמוס, המודל עלול להתבלבל. נסו לצלם על רקע לבן/שחור אחיד.</li>
+                                <li><strong>תאורה:</strong> הוסיפו תמונות בתנאי תאורה קשים כדי להפוך את המודל ל"חסין" יותר.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center border-t border-slate-100 pt-8">
+                    <button onclick="goToStep(2)" class="text-slate-500 font-bold">← חזור</button>
+                    <button onclick="window.location.reload()" class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all">סיום ונעילת פרויקט 💎</button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        function goToStep(idx) {
+            document.querySelectorAll('.step-container').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            const target = document.getElementById('step-' + idx);
+            if (target) target.classList.add('active');
+            const navBtn = document.getElementById('nav-' + idx);
+            if (navBtn) navBtn.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function copyCode() {
+            const code = document.getElementById('fullPythonCode').innerText;
+            const el = document.createElement('textarea');
+            el.value = code;
+            document.body.appendChild(el);
+            el.select();
+            document.execCommand('copy');
+            document.body.removeChild(el);
+            alert("הקוד הועתק ללוח!");
+        }
+    </script>
+</body>
+</html>
