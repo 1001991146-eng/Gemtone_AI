@@ -28,11 +28,12 @@
                 <span class="text-4xl">💎</span>
                 <h1 class="text-2xl font-black text-purple-900">זיהוי אבני חן ותכשיטים</h1>
             </div>
-            <nav class="flex gap-4">
-                <button onclick="goToStep(0)" id="nav-0" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1 active">נתונים</button>
-                <button onclick="goToStep(1)" id="nav-1" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1">אימון</button>
-                <button onclick="goToStep(2)" id="nav-2" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1">דרייב</button>
-                <button onclick="goToStep(3)" id="nav-3" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1">קוד</button>
+            <nav class="flex gap-4 overflow-x-auto no-scrollbar">
+                <button onclick="goToStep(0)" id="nav-0" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1 whitespace-nowrap active">נתונים</button>
+                <button onclick="goToStep(1)" id="nav-1" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1 whitespace-nowrap">אימון</button>
+                <button onclick="goToStep(2)" id="nav-2" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1 whitespace-nowrap">דרייב</button>
+                <button onclick="goToStep(3)" id="nav-3" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1 whitespace-nowrap">קוד</button>
+                <button onclick="goToStep(4)" id="nav-4" class="nav-btn text-sm font-bold text-slate-500 hover:text-purple-600 pb-1 whitespace-nowrap">הגנה על הפרויקט</button>
             </nav>
         </div>
     </header>
@@ -365,30 +366,186 @@ else:
                     </div>
                 </div>
 
-                <div class="bg-red-50 border-2 border-red-200 rounded-3xl p-8 mb-8">
-                    <h3 class="text-2xl font-black text-red-800 mb-6 flex items-center gap-2">
-                        <span>🛠️</span> מה עושים אם זה לא עובד?
-                    </h3>
-                    <div class="grid md:grid-cols-2 gap-6">
-                        <div class="space-y-4">
-                            <h4 class="font-bold text-red-900 underline">בעיות טכניות</h4>
-                            <ul class="text-sm space-y-3 text-red-800">
-                                <li><strong>שמות הקטגוריות:</strong> ודאו שב-Teachable Machine הקטגוריות נקראות בדיוק Amethyst, Rose-Quartz ו-Turquoise (עם מקף במקום רווח).</li>
-                                <li><strong>מוזיקה:</strong> בדקו שהרמקולים דלוקים ב-Colab. המוזיקה פועלת רק במצבי "זיהוי חי" או "העלאת תמונה".</li>
-                            </ul>
+                <div class="flex justify-between items-center border-t border-slate-100 pt-8">
+                    <button onclick="goToStep(2)" class="text-slate-500 font-bold">← חזור</button>
+                    <button onclick="goToStep(4)" class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all">המשך להכנה להגנה ←</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 4: DEFENSE PREPARATION -->
+        <div id="step-4" class="step-container">
+            <div class="glass p-8 rounded-3xl shadow-xl border-t-8 border-orange-500">
+                <h2 class="text-3xl font-bold text-orange-900 mb-6 flex items-center gap-3">
+                    <span class="bg-orange-100 p-2 rounded-lg">🎓</span>
+                    שלב 5: מתכוננים להגנה על הפרויקט
+                </h2>
+                
+                <div class="space-y-8">
+                    <!-- ניתוח אוספים ומבני נתונים - NEW SECTION -->
+                    <section>
+                        <h3 class="text-2xl font-bold text-orange-800 mb-6 underline">אוספים ומבני נתונים (Collections)</h3>
+                        <p class="text-sm text-slate-700 mb-6">במהלך כתיבת הקוד, השתמשנו בסוגים שונים של "קופסאות" לאחסון מידע. הנה הסבר על כל אחד מהם:</p>
+                        
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <!-- מילון - Dictionary -->
+                            <div class="bg-white p-6 rounded-2xl border-l-4 border-purple-500 shadow-sm">
+                                <h4 class="font-black text-lg mb-2">📖 מילון (Dictionary)</h4>
+                                <div class="bg-slate-900 text-purple-300 p-3 rounded-xl font-mono text-xs mb-3" dir="ltr">
+                                    music_library = { "Amethyst": "url1", "Turquoise": "url2" }
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    <strong>מה זה?</strong> אוסף של זוגות "מפתח" ו"ערך".<br>
+                                    <strong>למה השתמשנו בזה?</strong> המילון מושלם לשמירת נתונים שקשורים אחד לשני. ב-`music_library`, המפתח הוא שם האבן והערך הוא כתובת השיר. זה מאפשר לנו לשלוף מידע בשבריר שנייה בלי לחפש בכל הרשימה.
+                                </p>
+                            </div>
+
+                            <!-- רשימה - List -->
+                            <div class="bg-white p-6 rounded-2xl border-l-4 border-blue-500 shadow-sm">
+                                <h4 class="font-black text-lg mb-2">📜 רשימה (List)</h4>
+                                <div class="bg-slate-900 text-blue-300 p-3 rounded-xl font-mono text-xs mb-3" dir="ltr">
+                                    class_names = ["Amethyst", "Turquoise", ...]
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    <strong>מה זה?</strong> סדרה מסודרת של איברים שיש להם מיקום (אינדקס).<br>
+                                    <strong>למה השתמשנו בזה?</strong> המודל של הבינה המלאכותית מחזיר לנו מספר (אינדקס). השתמשנו ברשימת `class_names` כדי להפוך את המספר הזה חזרה למילה שאנחנו מבינים.
+                                </p>
+                            </div>
+
+                            <!-- משתנה פשוט - Simple Variable -->
+                            <div class="bg-white p-6 rounded-2xl border-l-4 border-green-500 shadow-sm">
+                                <h4 class="font-black text-lg mb-2">📍 משתנה פשוט (Variable)</h4>
+                                <div class="bg-slate-900 text-green-300 p-3 rounded-xl font-mono text-xs mb-3" dir="ltr">
+                                    correct = 0 <br> acc = 85.5
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    <strong>מה זה?</strong> תא בזיכרון ששומר ערך אחד בכל פעם (מספר, מחרוזת טקסט או בוליאני).<br>
+                                    <strong>למה השתמשנו בזה?</strong> משתמשים כמו `correct` משמשים אותנו כ"מונים" (Counters) שמתעדכנים במהלך התוכנית, או לשמירת נתיבים קבועים כמו `PATH`.
+                                </p>
+                            </div>
+
+                            <!-- אובייקט מורכב - Complex Object -->
+                            <div class="bg-white p-6 rounded-2xl border-l-4 border-orange-500 shadow-sm">
+                                <h4 class="font-black text-lg mb-2">🖼️ אובייקט/מערך נומפי (NumPy Array)</h4>
+                                <div class="bg-slate-900 text-orange-300 p-3 rounded-xl font-mono text-xs mb-3" dir="ltr">
+                                    img_array = np.asarray(img_resized)
+                                </div>
+                                <p class="text-xs text-slate-600 leading-relaxed">
+                                    <strong>מה זה?</strong> מערך רב-מימדי שמיועד לחישובים מתמטיים מהירים.<br>
+                                    <strong>למה השתמשנו בזה?</strong> תמונה היא בעצם מטריצה של מספרים. ספריית NumPy מאפשרת לנו לבצע פעולות על כל הפיקסלים בבת אחת (כמו חילוק ב-127.5) בצורה יעילה מאוד.
+                                </p>
+                            </div>
                         </div>
-                        <div class="space-y-4">
-                            <h4 class="font-bold text-red-900 underline">שיפור הדיוק</h4>
-                            <ul class="text-sm space-y-3 text-red-800">
-                                <li>הוסיפו תמונות אימון נוספות לאמטיסט, רוז-קוורץ וטורקיז.</li>
-                            </ul>
+                    </section>
+
+                    <!-- ניתוח פעולות הקוד (Functions) -->
+                    <section>
+                        <h3 class="text-2xl font-bold text-orange-800 mb-6 underline">ניתוח פעולות הקוד (Functions)</h3>
+                        
+                        <div class="space-y-6">
+                            <!-- open_gemstone_info -->
+                            <div class="bg-white p-6 rounded-2xl border-r-4 border-orange-500 shadow-sm">
+                                <h4 class="font-black text-lg mb-3">1. הפעולה open_gemstone_info</h4>
+                                <div class="bg-slate-900 text-orange-300 p-4 rounded-xl font-mono text-xs mb-3" dir="ltr">
+                                    if prediction == "Amethyst":<br>
+                                    &nbsp;&nbsp;display(Javascript(f'window.open("https://gia.edu/...", "_blank");'))
+                                </div>
+                                <p class="text-sm text-slate-700">
+                                    <strong>המטרה:</strong> להרחיב את חווית המשתמש מעבר לסתם "שם האבן".<br>
+                                    <strong>איך היא עובדת?</strong> הפעולה מקבלת את שם האבן שה-AI זיהה. היא משתמשת בתנאי (if) כדי לבדוק איזו אבן זו. אם זו אמטיסט, היא משתמשת בפקודת Javascript כדי להורות לדפדפן לפתוח לשונית חדשה עם האנציקלופדיה הרלוונטית.
+                                </p>
+                            </div>
+
+                            <!-- play_gemstone_theme_music -->
+                            <div class="bg-white p-6 rounded-2xl border-r-4 border-orange-500 shadow-sm">
+                                <h4 class="font-black text-lg mb-3">2. הפעולה play_gemstone_theme_music</h4>
+                                <div class="bg-slate-900 text-orange-300 p-4 rounded-xl font-mono text-xs mb-3" dir="ltr">
+                                    music_url = music_library.get(prediction)<br>
+                                    display(Audio(url=music_url, autoplay=True))
+                                </div>
+                                <p class="text-sm text-slate-700">
+                                    <strong>המטרה:</strong> הוספת חיווי קולי/מוזיקלי שמתאים לאופי של האבן.<br>
+                                    <strong>איך היא עובדת?</strong> יצרנו "ספרייה" (מילון) שמשדכת לכל שם של אבן כתובת אינטרנט של קובץ שמע. ברגע הזיהוי, הפונקציה שולפת את הכתובת המתאימה ומפעילה אותה אוטומטית (autoplay).
+                                </p>
+                            </div>
+
+                            <!-- predict_single -->
+                            <div class="bg-white p-6 rounded-2xl border-r-4 border-orange-500 shadow-sm">
+                                <h4 class="font-black text-lg mb-3">3. הפעולה predict_single</h4>
+                                <div class="bg-slate-900 text-orange-300 p-4 rounded-xl font-mono text-xs mb-3" dir="ltr">
+                                    img_array = (img_array / 127.5) - 1<br>
+                                    predictions = model.predict(img_array)
+                                </div>
+                                <p class="text-sm text-slate-700">
+                                    <strong>המטרה:</strong> "המוח" שמקבל תמונה ומחזיר ניחוש.<br>
+                                    <strong>איך היא עובדת?</strong> היא טוענת את התמונה, משנה את הגודל שלה ל-224x224 (כמו שהמודל דורש) ומנרמלת את המספרים. בסוף היא משתמשת ב-`model.predict` שזה הרגע שבו רשת הנוירונים שלנו עוברת על הפיקסלים ומוציאה רשימת הסתברויות.
+                                </p>
+                            </div>
+
+                            <!-- take_photo -->
+                            <div class="bg-white p-6 rounded-2xl border-r-4 border-orange-500 shadow-sm">
+                                <h4 class="font-black text-lg mb-3">4. הפעולה take_photo</h4>
+                                <div class="bg-slate-900 text-orange-300 p-4 rounded-xl font-mono text-xs mb-3" dir="ltr">
+                                    const stream = await navigator.mediaDevices.getUserMedia(...)
+                                </div>
+                                <p class="text-sm text-slate-700">
+                                    <strong>המטרה:</strong> גישה למצלמת הלפטופ בתוך סביבת ה-Colab.<br>
+                                    <strong>איך היא עובדת?</strong> מאחר ו-Colab רץ בענן, הוא לא יכול לגשת למצלמה שלנו ישירות. הפונקציה משתמשת ב-Javascript שרץ בדפדפן המקומי שלנו, פותחת את הזרם (stream) של הוידאו, ולוכדת פריים אחד כקובץ תמונה.
+                                </p>
+                            </div>
                         </div>
+                    </section>
+
+                    <!-- Code Logic Logic -->
+                    <section>
+                        <h3 class="text-2xl font-bold text-orange-800 mb-6 underline">הסבר הלוגיקה הכללית</h3>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-white p-5 rounded-2xl border border-orange-100">
+                                <h4 class="font-bold mb-2 text-orange-700">איך המחשב "רואה"?</h4>
+                                <p class="text-sm text-slate-600 leading-relaxed">המחשב לא מבין צבעים כמונו. הוא הופך את התמונה לטבלה ענקית של מספרים. בקוד אנחנו מבצעים <strong>"נרמול"</strong> - הופכים את כל המספרים לטווח שבין 1- ל-1 כדי שה-AI יוכל לעבד אותם בקלות ובמהירות.</p>
+                            </div>
+                            <div class="bg-white p-5 rounded-2xl border border-orange-100">
+                                <h4 class="font-bold mb-2 text-orange-700">שינוי גודל (Resizing)</h4>
+                                <p class="text-sm text-slate-600 leading-relaxed">המודל שלמדנו ב-Teachable Machine יודע לעבוד רק עם תמונות קטנות (224x224 פיקסלים). לכן, כל תמונה שאנחנו מצלמים, הקוד קודם כל "מכווץ" לגודל הזה לפני שהוא מנסה לנחש מה בתמונה.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Main Program Explanation -->
+                    <section class="bg-orange-50 p-6 rounded-2xl border border-orange-200">
+                        <h3 class="text-xl font-bold text-orange-900 mb-4">הסבר התוכנית הראשית (Main Menu)</h3>
+                        <p class="mb-4 text-slate-700">החלק האחרון בקוד הוא ה-Main Menu. הוא פועל בלולאה של "קלט-פלט":</p>
+                        <ul class="space-y-4 text-sm">
+                            <li class="flex gap-3">
+                                <span class="bg-orange-200 text-orange-800 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 font-bold">1</span>
+                                <div>
+                                    <span class="font-bold">אופציה 1 - מצלמה חיה:</span> מפעילה את `take_photo`, שומרת תמונה זמנית ושולחת אותה מיד ל-`predict_single`.
+                                </div>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="bg-orange-200 text-orange-800 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 font-bold">2</span>
+                                <div>
+                                    <span class="font-bold">אופציה 2 - העלאת קובץ:</span> משתמשת בספריית `files.upload` של גוגל ומנתחת את הקובץ שנבחר.
+                                </div>
+                            </li>
+                            <li class="flex gap-3">
+                                <span class="bg-orange-200 text-orange-800 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0 font-bold">3</span>
+                                <div>
+                                    <span class="font-bold">אופציה 3 - מבחן הדיוק:</span> זו הלוגיקה הכי מורכבת. היא עוברת על הרבה תמונות, משווה את ניחוש ה-AI לתשובה הנכונה שלנו, צוברת נקודות (`correct += 1`) ובסוף מחלקת את סך הנקודות בכמות התמונות כדי לקבל <strong>אחוז הצלחה</strong>.
+                                </div>
+                            </li>
+                        </ul>
+                    </section>
+
+                    <div class="bg-indigo-900 text-white p-6 rounded-2xl shadow-lg">
+                        <h3 class="font-bold mb-3">טיפ להצגה מוצלחת:</h3>
+                        <p class="text-sm opacity-90">כשתציגו, תגידו: "השתמשנו בפונקציות כדי שהקוד יהיה מודולרי - כלומר, כל חלק אחראי על משימה אחת (צילום, זיהוי, מידע), מה שהופך אותו לקל לקריאה ולתיקון שגיאות".</p>
                     </div>
                 </div>
 
-                <div class="flex justify-between items-center border-t border-slate-100 pt-8">
-                    <button onclick="goToStep(2)" class="text-slate-500 font-bold">← חזור</button>
-                    <button onclick="window.location.reload()" class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all">סיום ונעילת פרויקט 💎</button>
+                <div class="mt-10 flex justify-between items-center border-t border-slate-100 pt-8">
+                    <button onclick="goToStep(3)" class="text-slate-500 font-bold">← חזור לקוד</button>
+                    <button onclick="finishProject()" class="bg-indigo-600 text-white px-8 py-3 rounded-xl font-bold hover:bg-indigo-700 transition-all">סיום ונעילת פרויקט 💎</button>
                 </div>
             </div>
         </div>
@@ -415,6 +572,11 @@ else:
             document.execCommand('copy');
             document.body.removeChild(el);
             alert("הקוד הועתק ללוח!");
+        }
+
+        function finishProject() {
+            alert("מזל טוב! הפרויקט ננעל והסתיים בהצלחה. 💎✨");
+            goToStep(0);
         }
     </script>
 </body>
